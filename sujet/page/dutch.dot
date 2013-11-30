@@ -1,0 +1,9 @@
+digraph call_graph {
+  program;
+  input -> readln;
+  output -> writeln;
+  program -> dutch;
+  program -> input;
+  program -> output;
+  program -> readln;
+}

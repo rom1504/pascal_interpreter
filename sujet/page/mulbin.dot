@@ -1,0 +1,7 @@
+digraph call_graph {
+  program;
+  prod -> odd;
+  program -> prod;
+  program -> readln;
+  program -> writeln;
+}

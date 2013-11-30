@@ -1,0 +1,15 @@
+digraph call_graph {
+  program;
+  bor -> band;
+  bor -> bnot;
+  bor -> bnot [ style = dashed ];
+  implies -> bnot;
+  implies -> bor [ style = dashed ];
+  pbool -> writeln [ style = dashed ];
+  program -> test [ style = dashed ];
+  test -> band;
+  test -> implies;
+  test -> pbool;
+  test -> pbool [ style = dashed ];
+  test -> readln;
+}

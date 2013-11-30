@@ -1,0 +1,4 @@
+digraph call_graph {
+  program;
+  debile -> debile;
+}

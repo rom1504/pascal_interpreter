@@ -1,0 +1,25 @@
+digraph call_graph {
+  program;
+  affiche -> write;
+  affiche -> writeln [ style = dashed ];
+  bigadd -> modulo;
+  bigfact -> grandir;
+  bigfact -> smallmult;
+  bigmult -> bigadd;
+  bigmult -> copy;
+  bigmult -> grandir;
+  bigmult -> smallmult;
+  grandir -> modulo;
+  pow -> affiche [ style = dashed ];
+  pow -> bigmult;
+  pow -> copy;
+  pow -> grandir;
+  pow -> pow;
+  pow -> writeln;
+  program -> affiche;
+  program -> bigfact;
+  program -> grandir;
+  program -> pow;
+  program -> readln;
+  smallmult -> modulo;
+}

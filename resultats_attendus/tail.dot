@@ -1,0 +1,12 @@
+digraph call_graph {
+  program;
+  id -> writeln;
+  p -> succ;
+  p -> writeln;
+  program -> q;
+  program -> q [ style = dashed ];
+  q -> p [ style = dashed ];
+  q -> writeln;
+  succ -> id [ style = dashed ];
+  succ -> writeln;
+}

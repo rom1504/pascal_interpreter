@@ -1,0 +1,6 @@
+digraph call_graph {
+  program;
+  program -> sieve [ style = dashed ];
+  sieve -> readln;
+  sieve -> writeln;
+}

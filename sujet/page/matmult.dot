@@ -1,0 +1,11 @@
+digraph call_graph {
+  program;
+  affiche -> writeln;
+  mmult -> malloc;
+  mread -> malloc;
+  mread -> readln;
+  program -> affiche [ style = dashed ];
+  program -> mmult;
+  program -> mread;
+  program -> readln;
+}

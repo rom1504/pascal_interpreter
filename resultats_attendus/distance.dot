@@ -1,0 +1,9 @@
+digraph call_graph {
+  program;
+  distance -> min;
+  input -> readln;
+  program -> distance;
+  program -> input;
+  program -> readln;
+  program -> writeln [ style = dashed ];
+}

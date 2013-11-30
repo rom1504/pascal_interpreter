@@ -1,0 +1,9 @@
+digraph call_graph {
+  program;
+  hanoi -> hanoi;
+  hanoi -> hanoi [ style = dashed ];
+  hanoi -> other;
+  hanoi -> writeln;
+  program -> hanoi [ style = dashed ];
+  program -> readln;
+}

@@ -1,0 +1,7 @@
+digraph call_graph {
+  program;
+  fact -> times;
+  program -> fact;
+  program -> readln;
+  program -> writeln [ style = dashed ];
+}

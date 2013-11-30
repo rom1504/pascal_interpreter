@@ -1,0 +1,6 @@
+digraph call_graph {
+  program;
+  count -> count [ style = dashed ];
+  count -> writeln;
+  program -> count [ style = dashed ];
+}

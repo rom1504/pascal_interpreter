@@ -1,0 +1,8 @@
+digraph call_graph {
+  program;
+  check -> even;
+  check -> writeln;
+  even -> odd [ style = dashed ];
+  odd -> even [ style = dashed ];
+  program -> check [ style = dashed ];
+}

@@ -1,0 +1,427 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>Projet de compilation
+</TITLE>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</HEAD>
+<BODY>
+<H1>Projet de compilation</H1>
+<P> Vous êtes invités à consulter cette page régulièrement, des
+  informations complémentaires, précisions, questions bonus,
+  etc. pourront y être ajoutées.
+
+<P>Le projet est à rendre par mail
+  à <A HREF="mailto:guillaume.burel@ensiie.fr">guillaume.burel@ensiie.fr</A>
+  avant le vendredi 20 décembre 2013 à 18h.
+
+<P>Le sujet est disponible <A HREF="http://www.ensiie.fr/~guillaume.burel/compilation/projet_call_graph.pdf">ici</A>.
+
+<H2>FAQ</H2>
+<UL>
+<LI> <EM>Peut-on utiliser le langage XYZ ?</EM>
+<P> Seuls le C et l'OCaml sont autorisés. Vous êtes vivement
+  encouragés à utiliser OCaml (tout projet qui fera des erreurs de
+  segmentation verra sa note fortement réduite).
+
+<LI><EM> Peut-on utiliser des objets ?</EM>
+<P> Vous pouvez utiliser les objets en OCaml, mais je ne vous le
+  conseille pas pour ce projet.
+
+<LI> <EM>Faut-il vraiment utiliser lex et yacc (resp. ocamllex et ocamlyacc) pour
+  engendrer l'analyseur syntaxique (<EM>front-end</EM>) ?</EM>
+
+<P>Oui.
+
+<LI> <EM>Peut-on utiliser flex/bison au lieu de lex/yacc ?</EM>
+
+<P>flex et bison sont des versions libres de lex et yacc qui leur sont
+  plus ou moins compatibles. Vous pouvez bien entendu les utiliser.
+
+
+<LI> <EM>Peut-on utiliser des librairies de HashTable ou d'autres
+  structures des données déjà existantes (graphes, arbres, ...) ?</EM>
+
+<P> Oui, c'est recommandé. N'oubliez pas de fournir les
+  librairies en question pour être certains que votre projet
+  compile. En OCaml, on pourra en particulier utiliser les modules
+  Map, Set et Hashtbl de la librairie standard.
+ 
+</UL>
+
+<H2>Exemples</H2>
+
+Ces exemples prennent en compte le bonus avec les arêtes représentants
+les appels terminaux en pointillés.
+
+Vous pouvez trouver l'ensemble des fichiers d'entrée dans <A HREF="exemples_call_graph.tar.gz">cette archive</A>.
+<table border="1">
+<tr><td>Entrée Pseudo-Pascal</td><td>Sortie <tt>dot</tt></td><td>Graphe d'appel (SVG obtenu à partir du .dot)</td></tr>
+<tr>
+<td><a href="a.p">a.p</a></td>
+<td><a href="a.dot">a.dot</a></td>
+<td><a href="a.svg"><img src="a.svg" alt=a.svg/></a></td>
+</tr>
+<tr>
+<td><a href="arith2.p">arith2.p</a></td>
+<td><a href="arith2.dot">arith2.dot</a></td>
+<td><a href="arith2.svg"><img src="arith2.svg" alt=arith2.svg/></a></td>
+</tr>
+<tr>
+<td><a href="arith.p">arith.p</a></td>
+<td><a href="arith.dot">arith.dot</a></td>
+<td><a href="arith.svg"><img src="arith.svg" alt=arith.svg/></a></td>
+</tr>
+<tr>
+<td><a href="arit.p">arit.p</a></td>
+<td><a href="arit.dot">arit.dot</a></td>
+<td><a href="arit.svg"><img src="arit.svg" alt=arit.svg/></a></td>
+</tr>
+<tr>
+<td><a href="atree.p">atree.p</a></td>
+<td><a href="atree.dot">atree.dot</a></td>
+<td><a href="atree.svg"><img src="atree.svg" alt=atree.svg/></a></td>
+</tr>
+<tr>
+<td><a href="automate.p">automate.p</a></td>
+<td><a href="automate.dot">automate.dot</a></td>
+<td><a href="automate.svg"><img src="automate.svg" alt=automate.svg/></a></td>
+</tr>
+<tr>
+<td><a href="bignum.p">bignum.p</a></td>
+<td><a href="bignum.dot">bignum.dot</a></td>
+<td><a href="bignum.svg"><img src="bignum.svg" alt=bignum.svg/></a></td>
+</tr>
+<tr>
+<td><a href="bigtail.p">bigtail.p</a></td>
+<td><a href="bigtail.dot">bigtail.dot</a></td>
+<td><a href="bigtail.svg"><img src="bigtail.svg" alt=bigtail.svg/></a></td>
+</tr>
+<tr>
+<td><a href="bigtri.p">bigtri.p</a></td>
+<td><a href="bigtri.dot">bigtri.dot</a></td>
+<td><a href="bigtri.svg"><img src="bigtri.svg" alt=bigtri.svg/></a></td>
+</tr>
+<tr>
+<td><a href="bool.p">bool.p</a></td>
+<td><a href="bool.dot">bool.dot</a></td>
+<td><a href="bool.svg"><img src="bool.svg" alt=bool.svg/></a></td>
+</tr>
+<tr>
+<td><a href="calcul.p">calcul.p</a></td>
+<td><a href="calcul.dot">calcul.dot</a></td>
+<td><a href="calcul.svg"><img src="calcul.svg" alt=calcul.svg/></a></td>
+</tr>
+<tr>
+<td><a href="color2.p">color2.p</a></td>
+<td><a href="color2.dot">color2.dot</a></td>
+<td><a href="color2.svg"><img src="color2.svg" alt=color2.svg/></a></td>
+</tr>
+<tr>
+<td><a href="color.p">color.p</a></td>
+<td><a href="color.dot">color.dot</a></td>
+<td><a href="color.svg"><img src="color.svg" alt=color.svg/></a></td>
+</tr>
+<tr>
+<td><a href="copy.p">copy.p</a></td>
+<td><a href="copy.dot">copy.dot</a></td>
+<td><a href="copy.svg"><img src="copy.svg" alt=copy.svg/></a></td>
+</tr>
+<tr>
+<td><a href="couple.p">couple.p</a></td>
+<td><a href="couple.dot">couple.dot</a></td>
+<td><a href="couple.svg"><img src="couple.svg" alt=couple.svg/></a></td>
+</tr>
+<tr>
+<td><a href="court-circuit.p">court-circuit.p</a></td>
+<td><a href="court-circuit.dot">court-circuit.dot</a></td>
+<td><a href="court-circuit.svg"><img src="court-circuit.svg" alt=court-circuit.svg/></a></td>
+</tr>
+<tr>
+<td><a href="dead.p">dead.p</a></td>
+<td><a href="dead.dot">dead.dot</a></td>
+<td><a href="dead.svg"><img src="dead.svg" alt=dead.svg/></a></td>
+</tr>
+<tr>
+<td><a href="debile.p">debile.p</a></td>
+<td><a href="debile.dot">debile.dot</a></td>
+<td><a href="debile.svg"><img src="debile.svg" alt=debile.svg/></a></td>
+</tr>
+<tr>
+<td><a href="dicho.p">dicho.p</a></td>
+<td><a href="dicho.dot">dicho.dot</a></td>
+<td><a href="dicho.svg"><img src="dicho.svg" alt=dicho.svg/></a></td>
+</tr>
+<tr>
+<td><a href="distance.p">distance.p</a></td>
+<td><a href="distance.dot">distance.dot</a></td>
+<td><a href="distance.svg"><img src="distance.svg" alt=distance.svg/></a></td>
+</tr>
+<tr>
+<td><a href="divbyzero.p">divbyzero.p</a></td>
+<td><a href="divbyzero.dot">divbyzero.dot</a></td>
+<td><a href="divbyzero.svg"><img src="divbyzero.svg" alt=divbyzero.svg/></a></td>
+</tr>
+<tr>
+<td><a href="dutch.p">dutch.p</a></td>
+<td><a href="dutch.dot">dutch.dot</a></td>
+<td><a href="dutch.svg"><img src="dutch.svg" alt=dutch.svg/></a></td>
+</tr>
+<tr>
+<td><a href="echo.p">echo.p</a></td>
+<td><a href="echo.dot">echo.dot</a></td>
+<td><a href="echo.svg"><img src="echo.svg" alt=echo.svg/></a></td>
+</tr>
+<tr>
+<td><a href="exam.p">exam.p</a></td>
+<td><a href="exam.dot">exam.dot</a></td>
+<td><a href="exam.svg"><img src="exam.svg" alt=exam.svg/></a></td>
+</tr>
+<tr>
+<td><a href="ex.p">ex.p</a></td>
+<td><a href="ex.dot">ex.dot</a></td>
+<td><a href="ex.svg"><img src="ex.svg" alt=ex.svg/></a></td>
+</tr>
+<tr>
+<td><a href="expr.p">expr.p</a></td>
+<td><a href="expr.dot">expr.dot</a></td>
+<td><a href="expr.svg"><img src="expr.svg" alt=expr.svg/></a></td>
+</tr>
+<tr>
+<td><a href="fact1.p">fact1.p</a></td>
+<td><a href="fact1.dot">fact1.dot</a></td>
+<td><a href="fact1.svg"><img src="fact1.svg" alt=fact1.svg/></a></td>
+</tr>
+<tr>
+<td><a href="fact2.p">fact2.p</a></td>
+<td><a href="fact2.dot">fact2.dot</a></td>
+<td><a href="fact2.svg"><img src="fact2.svg" alt=fact2.svg/></a></td>
+</tr>
+<tr>
+<td><a href="fact3.p">fact3.p</a></td>
+<td><a href="fact3.dot">fact3.dot</a></td>
+<td><a href="fact3.svg"><img src="fact3.svg" alt=fact3.svg/></a></td>
+</tr>
+<tr>
+<td><a href="fact4.p">fact4.p</a></td>
+<td><a href="fact4.dot">fact4.dot</a></td>
+<td><a href="fact4.svg"><img src="fact4.svg" alt=fact4.svg/></a></td>
+</tr>
+<tr>
+<td><a href="fact5.p">fact5.p</a></td>
+<td><a href="fact5.dot">fact5.dot</a></td>
+<td><a href="fact5.svg"><img src="fact5.svg" alt=fact5.svg/></a></td>
+</tr>
+<tr>
+<td><a href="fact6.p">fact6.p</a></td>
+<td><a href="fact6.dot">fact6.dot</a></td>
+<td><a href="fact6.svg"><img src="fact6.svg" alt=fact6.svg/></a></td>
+</tr>
+<tr>
+<td><a href="fact.p">fact.p</a></td>
+<td><a href="fact.dot">fact.dot</a></td>
+<td><a href="fact.svg"><img src="fact.svg" alt=fact.svg/></a></td>
+</tr>
+<tr>
+<td><a href="fib.p">fib.p</a></td>
+<td><a href="fib.dot">fib.dot</a></td>
+<td><a href="fib.svg"><img src="fib.svg" alt=fib.svg/></a></td>
+</tr>
+<tr>
+<td><a href="find.p">find.p</a></td>
+<td><a href="find.dot">find.dot</a></td>
+<td><a href="find.svg"><img src="find.svg" alt=find.svg/></a></td>
+</tr>
+<tr>
+<td><a href="formula.p">formula.p</a></td>
+<td><a href="formula.dot">formula.dot</a></td>
+<td><a href="formula.svg"><img src="formula.svg" alt=formula.svg/></a></td>
+</tr>
+<tr>
+<td><a href="gcdfunc.p">gcdfunc.p</a></td>
+<td><a href="gcdfunc.dot">gcdfunc.dot</a></td>
+<td><a href="gcdfunc.svg"><img src="gcdfunc.svg" alt=gcdfunc.svg/></a></td>
+</tr>
+<tr>
+<td><a href="gcd.p">gcd.p</a></td>
+<td><a href="gcd.dot">gcd.dot</a></td>
+<td><a href="gcd.svg"><img src="gcd.svg" alt=gcd.svg/></a></td>
+</tr>
+<tr>
+<td><a href="hanoi.p">hanoi.p</a></td>
+<td><a href="hanoi.dot">hanoi.dot</a></td>
+<td><a href="hanoi.svg"><img src="hanoi.svg" alt=hanoi.svg/></a></td>
+</tr>
+<tr>
+<td><a href="heapsort.p">heapsort.p</a></td>
+<td><a href="heapsort.dot">heapsort.dot</a></td>
+<td><a href="heapsort.svg"><img src="heapsort.svg" alt=heapsort.svg/></a></td>
+</tr>
+<tr>
+<td><a href="hp.p">hp.p</a></td>
+<td><a href="hp.dot">hp.dot</a></td>
+<td><a href="hp.svg"><img src="hp.svg" alt=hp.svg/></a></td>
+</tr>
+<tr>
+<td><a href="int32.p">int32.p</a></td>
+<td><a href="int32.dot">int32.dot</a></td>
+<td><a href="int32.svg"><img src="int32.svg" alt=int32.svg/></a></td>
+</tr>
+<tr>
+<td><a href="interf.p">interf.p</a></td>
+<td><a href="interf.dot">interf.dot</a></td>
+<td><a href="interf.svg"><img src="interf.svg" alt=interf.svg/></a></td>
+</tr>
+<tr>
+<td><a href="killer.p">killer.p</a></td>
+<td><a href="killer.dot">killer.dot</a></td>
+<td><a href="killer.svg"><img src="killer.svg" alt=killer.svg/></a></td>
+</tr>
+<tr>
+<td><a href="lex.p">lex.p</a></td>
+<td><a href="lex.dot">lex.dot</a></td>
+<td><a href="lex.svg"><img src="lex.svg" alt=lex.svg/></a></td>
+</tr>
+<tr>
+<td><a href="loop.p">loop.p</a></td>
+<td><a href="loop.dot">loop.dot</a></td>
+<td><a href="loop.svg"><img src="loop.svg" alt=loop.svg/></a></td>
+</tr>
+<tr>
+<td><a href="many.p">many.p</a></td>
+<td><a href="many.dot">many.dot</a></td>
+<td><a href="many.svg"><img src="many.svg" alt=many.svg/></a></td>
+</tr>
+<tr>
+<td><a href="matmult.p">matmult.p</a></td>
+<td><a href="matmult.dot">matmult.dot</a></td>
+<td><a href="matmult.svg"><img src="matmult.svg" alt=matmult.svg/></a></td>
+</tr>
+<tr>
+<td><a href="mrec.p">mrec.p</a></td>
+<td><a href="mrec.dot">mrec.dot</a></td>
+<td><a href="mrec.svg"><img src="mrec.svg" alt=mrec.svg/></a></td>
+</tr>
+<tr>
+<td><a href="mul2.p">mul2.p</a></td>
+<td><a href="mul2.dot">mul2.dot</a></td>
+<td><a href="mul2.svg"><img src="mul2.svg" alt=mul2.svg/></a></td>
+</tr>
+<tr>
+<td><a href="mulbin.p">mulbin.p</a></td>
+<td><a href="mulbin.dot">mulbin.dot</a></td>
+<td><a href="mulbin.svg"><img src="mulbin.svg" alt=mulbin.svg/></a></td>
+</tr>
+<tr>
+<td><a href="mul.p">mul.p</a></td>
+<td><a href="mul.dot">mul.dot</a></td>
+<td><a href="mul.svg"><img src="mul.svg" alt=mul.svg/></a></td>
+</tr>
+<tr>
+<td><a href="plus6.p">plus6.p</a></td>
+<td><a href="plus6.dot">plus6.dot</a></td>
+<td><a href="plus6.svg"><img src="plus6.svg" alt=plus6.svg/></a></td>
+</tr>
+<tr>
+<td><a href="poweriter.p">poweriter.p</a></td>
+<td><a href="poweriter.dot">poweriter.dot</a></td>
+<td><a href="poweriter.svg"><img src="poweriter.svg" alt=poweriter.svg/></a></td>
+</tr>
+<tr>
+<td><a href="power.p">power.p</a></td>
+<td><a href="power.dot">power.dot</a></td>
+<td><a href="power.svg"><img src="power.svg" alt=power.svg/></a></td>
+</tr>
+<tr>
+<td><a href="priorite.p">priorite.p</a></td>
+<td><a href="priorite.dot">priorite.dot</a></td>
+<td><a href="priorite.svg"><img src="priorite.svg" alt=priorite.svg/></a></td>
+</tr>
+<tr>
+<td><a href="queens.p">queens.p</a></td>
+<td><a href="queens.dot">queens.dot</a></td>
+<td><a href="queens.svg"><img src="queens.svg" alt=queens.svg/></a></td>
+</tr>
+<tr>
+<td><a href="quick.p">quick.p</a></td>
+<td><a href="quick.dot">quick.dot</a></td>
+<td><a href="quick.svg"><img src="quick.svg" alt=quick.svg/></a></td>
+</tr>
+<tr>
+<td><a href="rec.p">rec.p</a></td>
+<td><a href="rec.dot">rec.dot</a></td>
+<td><a href="rec.svg"><img src="rec.svg" alt=rec.svg/></a></td>
+</tr>
+<tr>
+<td><a href="sieve.p">sieve.p</a></td>
+<td><a href="sieve.dot">sieve.dot</a></td>
+<td><a href="sieve.svg"><img src="sieve.svg" alt=sieve.svg/></a></td>
+</tr>
+<tr>
+<td><a href="spill-coalescing.p">spill-coalescing.p</a></td>
+<td><a href="spill-coalescing.dot">spill-coalescing.dot</a></td>
+<td><a href="spill-coalescing.svg"><img src="spill-coalescing.svg" alt=spill-coalescing.svg/></a></td>
+</tr>
+<tr>
+<td><a href="succ.p">succ.p</a></td>
+<td><a href="succ.dot">succ.dot</a></td>
+<td><a href="succ.svg"><img src="succ.svg" alt=succ.svg/></a></td>
+</tr>
+<tr>
+<td><a href="tail.p">tail.p</a></td>
+<td><a href="tail.dot">tail.dot</a></td>
+<td><a href="tail.svg"><img src="tail.svg" alt=tail.svg/></a></td>
+</tr>
+<tr>
+<td><a href="tak.p">tak.p</a></td>
+<td><a href="tak.dot">tak.dot</a></td>
+<td><a href="tak.svg"><img src="tak.svg" alt=tak.svg/></a></td>
+</tr>
+<tr>
+<td><a href="tregs2.p">tregs2.p</a></td>
+<td><a href="tregs2.dot">tregs2.dot</a></td>
+<td><a href="tregs2.svg"><img src="tregs2.svg" alt=tregs2.svg/></a></td>
+</tr>
+<tr>
+<td><a href="tregs.p">tregs.p</a></td>
+<td><a href="tregs.dot">tregs.dot</a></td>
+<td><a href="tregs.svg"><img src="tregs.svg" alt=tregs.svg/></a></td>
+</tr>
+<tr>
+<td><a href="triangle.p">triangle.p</a></td>
+<td><a href="triangle.dot">triangle.dot</a></td>
+<td><a href="triangle.svg"><img src="triangle.svg" alt=triangle.svg/></a></td>
+</tr>
+<tr>
+<td><a href="tri.p">tri.p</a></td>
+<td><a href="tri.dot">tri.dot</a></td>
+<td><a href="tri.svg"><img src="tri.svg" alt=tri.svg/></a></td>
+</tr>
+<tr>
+<td><a href="trivial2.p">trivial2.p</a></td>
+<td><a href="trivial2.dot">trivial2.dot</a></td>
+<td><a href="trivial2.svg"><img src="trivial2.svg" alt=trivial2.svg/></a></td>
+</tr>
+<tr>
+<td><a href="trivial3.p">trivial3.p</a></td>
+<td><a href="trivial3.dot">trivial3.dot</a></td>
+<td><a href="trivial3.svg"><img src="trivial3.svg" alt=trivial3.svg/></a></td>
+</tr>
+<tr>
+<td><a href="trivial.p">trivial.p</a></td>
+<td><a href="trivial.dot">trivial.dot</a></td>
+<td><a href="trivial.svg"><img src="trivial.svg" alt=trivial.svg/></a></td>
+</tr>
+<tr>
+<td><a href="uninitialized.p">uninitialized.p</a></td>
+<td><a href="uninitialized.dot">uninitialized.dot</a></td>
+<td><a href="uninitialized.svg"><img src="uninitialized.svg" alt=uninitialized.svg/></a></td>
+</tr>
+<tr>
+<td><a href="zero.p">zero.p</a></td>
+<td><a href="zero.dot">zero.dot</a></td>
+<td><a href="zero.svg"><img src="zero.svg" alt=zero.svg/></a></td>
+</tr>
+</table>
+</body>

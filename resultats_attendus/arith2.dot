@@ -1,0 +1,7 @@
+digraph call_graph {
+  program;
+  arraydouble -> double;
+  program -> arraydouble;
+  program -> readln;
+  program -> writeln;
+}

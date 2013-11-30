@@ -1,0 +1,13 @@
+digraph call_graph {
+  program;
+  downheap -> downheap [ style = dashed ];
+  downheap -> swap;
+  heapsort -> downheap;
+  heapsort -> swap;
+  input -> readln;
+  output -> writeln;
+  program -> heapsort;
+  program -> input;
+  program -> output;
+  program -> readln;
+}

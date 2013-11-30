@@ -1,0 +1,9 @@
+digraph call_graph {
+  program;
+  program -> somme;
+  program -> somme2;
+  program -> writeln;
+  program -> writeln [ style = dashed ];
+  somme -> somme [ style = dashed ];
+  somme2 -> somme2 [ style = dashed ];
+}

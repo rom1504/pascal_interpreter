@@ -1,0 +1,10 @@
+digraph call_graph {
+  program;
+  affiche -> writeln;
+  lire -> readln;
+  program -> affiche [ style = dashed ];
+  program -> lire;
+  program -> tri;
+  tri -> tri;
+  tri -> tri [ style = dashed ];
+}

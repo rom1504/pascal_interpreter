@@ -1,0 +1,10 @@
+digraph call_graph {
+  program;
+  printboard -> write;
+  printboard -> writeln;
+  printboard -> writeln [ style = dashed ];
+  program -> readln;
+  program -> try [ style = dashed ];
+  try -> printboard [ style = dashed ];
+  try -> try;
+}

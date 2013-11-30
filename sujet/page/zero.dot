@@ -1,0 +1,3 @@
+digraph call_graph {
+  program;
+}

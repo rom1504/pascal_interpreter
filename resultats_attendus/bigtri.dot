@@ -1,0 +1,12 @@
+digraph call_graph {
+  program;
+  affiche -> write;
+  affiche -> writeln [ style = dashed ];
+  bigadd -> modulo;
+  grandir -> modulo;
+  program -> readln;
+  program -> triangle [ style = dashed ];
+  triangle -> affiche;
+  triangle -> bigadd;
+  triangle -> grandir;
+}

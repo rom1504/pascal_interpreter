@@ -1,0 +1,14 @@
+digraph call_graph {
+  program;
+  fib -> fib1;
+  fib -> fib2;
+  fib -> sum [ style = dashed ];
+  fib1 -> fib1;
+  fib1 -> fib2;
+  fib2 -> fib1;
+  fib2 -> fib2;
+  fib2 -> sum;
+  program -> fib;
+  program -> readln;
+  program -> writeln [ style = dashed ];
+}

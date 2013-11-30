@@ -1,0 +1,17 @@
+digraph call_graph {
+  program;
+  affiche -> writeln;
+  lire -> matrix;
+  lire -> readln;
+  lire -> set;
+  matmult -> get;
+  matmult -> matrix;
+  matmult -> set;
+  pow -> matmult;
+  pow -> matmult [ style = dashed ];
+  pow -> pow;
+  program -> affiche [ style = dashed ];
+  program -> lire;
+  program -> pow;
+  program -> readln;
+}
