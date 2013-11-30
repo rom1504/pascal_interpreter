@@ -118,7 +118,7 @@ procedure_definition:
 	END SEMICOLON
 	{($2,$4,$7,$9)};
 	
-procedure_function_definition:
+procedure_or_function_definition:
 	function_definition {Func $1}
 	| procedure_definition {Proc $1};
 
@@ -128,8 +128,8 @@ instruction_list:
 	| {[]};	
 
 procedure_or_function_definition_list:
-	procedure_function_definition procedure_or_function_definition_list {$1::$2}
-	| procedure_function_definition {$1::[]}
+	procedure_or_function_definition procedure_or_function_definition_list {$1::$2}
+	| procedure_or_function_definition {$1::[]}
 	| {[]};		
 	
 variable_definition:VAR non_empty_environment_semicolon {$2};

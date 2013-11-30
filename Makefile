@@ -1,4 +1,10 @@
-all: bin/pascal_to_pascal
+all:  bin/test_parse bin/pascal_to_pascal
+
+bin/test_parse:temp/lexer.cmo temp/parser.cmo temp/test_parse.cmo temp/type.cmo Makefile
+	ocamlc -I temp -o bin/test_parse temp/type.cmo temp/lexer.cmo temp/parser.cmo temp/test_parse.cmo
+	
+temp/test_parse.cmo:source/test_parse.ml temp/parser.cmi temp/lexer.cmi temp/type.cmi Makefile
+	ocamlc -I temp -o temp/test_parse.cmo -c source/test_parse.ml
 
 bin/pascal_to_pascal:temp/lexer.cmo temp/parser.cmo temp/pascal_to_pascal.cmo temp/type.cmo Makefile
 	ocamlc -I temp -o bin/pascal_to_pascal temp/type.cmo temp/lexer.cmo temp/parser.cmo temp/pascal_to_pascal.cmo
@@ -36,3 +42,6 @@ test_pascal_to_pascal:bin/pascal_to_pascal Makefile
 	@echo "Premier exemple, trivial.p :"
 	@cat exemple/trivial.p | bin/pascal_to_pascal
 	@echo ""
+	
+test_parse:bin/test_parse Makefile
+	./verif.sh

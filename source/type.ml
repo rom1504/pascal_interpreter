@@ -1,4 +1,4 @@
-(** Types pour définir un arbre de syntaxe abstrait *)
+(** Types to define an abstract syntax tree *)
 
 type constant = Int of int | Bool of bool
 
