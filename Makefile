@@ -1,4 +1,4 @@
-all:  bin/test_parse bin/pascal_to_pascal bin/print_call_graph
+all: bin/test_parse bin/pascal_to_pascal bin/print_call_graph
 
 bin/print_call_graph:temp/lexer.cmo temp/parser.cmo temp/print_call_graph.cmo temp/type.cmo temp/make_call_graph.cmo Makefile
 	ocamlc -I temp -o bin/print_call_graph temp/type.cmo temp/make_call_graph.cmo temp/lexer.cmo temp/parser.cmo temp/print_call_graph.cmo

@@ -1,7 +1,6 @@
 open Type;;
 
 module IdentifierMap = Map.Make (String);;
-(* module IdentifierSet = Set.Make (String*bool);; *)
 module IdentifierSet = Set.Make (struct
     type t = string*bool
     let compare = Pervasives.compare

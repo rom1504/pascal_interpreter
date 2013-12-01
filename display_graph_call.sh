@@ -1,0 +1,1 @@
+cat $1 | ./pascal_to_svg.sh | display

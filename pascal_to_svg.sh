@@ -1,0 +1,1 @@
+cat - | bin/print_call_graph | dot
