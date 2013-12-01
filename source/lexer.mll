@@ -44,5 +44,3 @@ rule token = parse
 	| ['a'-'z''A'-'Z']['a'-'z''A'-'Z''0'-'9']* as i {IDENTIFIER(i)}
 	| '{' [^'{' '}']+ '}' {token lexbuf}
 	| eof {EOF}
-	
-	

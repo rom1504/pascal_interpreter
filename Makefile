@@ -1,4 +1,13 @@
-all:  bin/test_parse bin/pascal_to_pascal
+all:  bin/test_parse bin/pascal_to_pascal bin/print_call_graph
+
+bin/print_call_graph:temp/lexer.cmo temp/parser.cmo temp/print_call_graph.cmo temp/type.cmo temp/make_call_graph.cmo Makefile
+	ocamlc -I temp -o bin/print_call_graph temp/type.cmo temp/make_call_graph.cmo temp/lexer.cmo temp/parser.cmo temp/print_call_graph.cmo
+	
+temp/print_call_graph.cmo:source/print_call_graph.ml temp/parser.cmi temp/lexer.cmi temp/type.cmi temp/make_call_graph.cmi Makefile
+	ocamlc -I temp -o temp/print_call_graph.cmo -c source/print_call_graph.ml
+	
+temp/make_call_graph.cmo temp/make_call_graph.cmi:source/make_call_graph.ml temp/type.cmi Makefile
+	ocamlc -I temp -o temp/make_call_graph.cmo -c source/make_call_graph.ml
 
 bin/test_parse:temp/lexer.cmo temp/parser.cmo temp/test_parse.cmo temp/type.cmo Makefile
 	ocamlc -I temp -o bin/test_parse temp/type.cmo temp/lexer.cmo temp/parser.cmo temp/test_parse.cmo
@@ -38,10 +47,16 @@ clean:
 htmldoc:source/type.ml source/pascal_to_pascal.ml temp/type.cmi temp/parser.cmi temp/infer_type.cmi temp/lexer.cmi Makefile
 	ocamldoc -charset utf8 -html -d htmldoc -I temp source/type.ml source/pascal_to_pascal.ml
 	
-test_pascal_to_pascal:bin/pascal_to_pascal Makefile
-	@echo "Premier exemple, trivial.p :"
+exemple_pascal_to_pascal:bin/pascal_to_pascal Makefile
+	@echo "Premier exemple, trivial.p original :"
+	@cat exemple/trivial.p
+	@echo ""
+	@echo "Premier exemple, trivial.p généré :"
 	@cat exemple/trivial.p | bin/pascal_to_pascal
 	@echo ""
 	
 test_parse:bin/test_parse Makefile
-	./verif.sh
+	bash parse_error_verif.sh
+	
+test_pascal_to_pascal:bin/pascal_to_pascal Makefile
+	bash pascal_to_pascal_verif.sh
