@@ -7,7 +7,7 @@ let string_of_call_graph call_graph=
 	"digraph call_graph {\n  program;\n"^
 	(IdentifierMap.fold 
 	(fun identifier1 identifier_set s1 -> 
-		IdentifierSet.fold (fun identifier2 s2 -> s2^"  "^identifier1^" -> "^identifier2^";\n") identifier_set s1)
+		IdentifierSet.fold (fun (identifier2,terminal) s2 -> s2^"  "^identifier1^" -> "^identifier2^(if terminal then " [ style = dashed ]" else "")^";\n") identifier_set s1)
 	call_graph "")
 	^"}";;
 

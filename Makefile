@@ -47,7 +47,7 @@ clean:
 htmldoc:source/type.ml source/pascal_to_pascal.ml temp/type.cmi temp/parser.cmi temp/infer_type.cmi temp/lexer.cmi Makefile
 	ocamldoc -charset utf8 -html -d htmldoc -I temp source/type.ml source/pascal_to_pascal.ml
 	
-exemple_pascal_to_pascal:bin/pascal_to_pascal Makefile
+pascal_to_pascal_example:bin/pascal_to_pascal Makefile
 	@echo "Premier exemple, trivial.p original :"
 	@cat exemple/trivial.p
 	@echo ""
@@ -55,8 +55,26 @@ exemple_pascal_to_pascal:bin/pascal_to_pascal Makefile
 	@cat exemple/trivial.p | bin/pascal_to_pascal
 	@echo ""
 	
-test_parse:bin/test_parse Makefile
-	bash parse_error_verif.sh
+parse_test:temp/parse_error_test_done
 	
-test_pascal_to_pascal:bin/pascal_to_pascal Makefile
-	bash pascal_to_pascal_verif.sh
+
+pascal_to_pascal_test:temp/pascal_to_pascal_test_done
+	
+
+print_call_graph_test:temp/print_call_graph_test_done
+	
+	
+temp/parse_error_test_done:bin/test_parse test/parse_error_test.sh Makefile
+	bash test/parse_error_test.sh
+	touch temp/parse_error_test_done
+	
+temp/pascal_to_pascal_test_done:bin/pascal_to_pascal test/pascal_to_pascal_test.sh Makefile
+	bash test/pascal_to_pascal_test.sh
+	touch temp/pascal_to_pascal_test_done
+	
+temp/print_call_graph_test_done:bin/print_call_graph test/print_call_graph_test.sh Makefile
+	bash test/print_call_graph_test.sh
+	touch temp/print_call_graph_test_done
+
+test:parse_test pascal_to_pascal_test print_call_graph_test
+	
