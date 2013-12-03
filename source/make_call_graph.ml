@@ -5,9 +5,10 @@ module IdentifierSet = Set.Make (struct
     type t = string*bool
     let compare = Pervasives.compare
   end);;
-
+  
 type call_graph=IdentifierSet.t IdentifierMap.t;;
     
+(** add an arc to the graph *)
 let link terminal f1 f2 map=
 	let ens=try IdentifierMap.find f1 map with Not_found -> IdentifierSet.empty in
 	IdentifierMap.add f1 (IdentifierSet.add (f2,terminal) ens) map;;

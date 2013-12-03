@@ -44,8 +44,9 @@ clean:
 	rm -f bin/*
 	rm -f htmldoc/*
 	
-htmldoc:source/type.ml source/pascal_to_pascal.ml temp/type.cmi temp/parser.cmi temp/infer_type.cmi temp/lexer.cmi Makefile
-	ocamldoc -charset utf8 -html -d htmldoc -I temp source/type.ml source/pascal_to_pascal.ml
+htmldoc:source/make_call_graph.ml  source/pascal_to_pascal.ml  source/print_call_graph.ml  source/test_parse.ml  source/type.ml temp/lexer.cmi  temp/make_call_graph.cmi  temp/parser.cmi  temp/pascal_to_pascal.cmi  temp/print_call_graph.cmi  temp/test_parse.cmi  temp/type.cmi Makefile
+	mkdir -p htmldoc
+	ocamldoc -charset utf8 -html -d htmldoc -I temp source/make_call_graph.ml  source/pascal_to_pascal.ml  source/print_call_graph.ml  source/test_parse.ml  source/type.ml
 	
 pascal_to_pascal_example:bin/pascal_to_pascal Makefile
 	@echo "Premier exemple, trivial.p original :"
