@@ -2,7 +2,7 @@ export OCAMLRUNPARAM='p'
 c=0
 for i in `ls exemple/*` 
 do
-cat $i | bin/pascal_to_pascal 2>&1| grep -q error
+cat $i | bin/test_parse 2>&1| grep -q error
 if [ $? -eq 0 ]
 then
 echo probleme avec $i

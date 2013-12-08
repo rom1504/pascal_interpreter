@@ -19,9 +19,13 @@
 %token BOOLEAN INTEGER
 %token EOF
 
+%left DIFF SUP_EQUAL SUP INF_EQUAL EQUAL INF
+
 %left PLUS MINUS
 %left TIMES DIV
+%nonassoc OP
 %nonassoc UMINUS
+
 
 %left OR
 %left AND
@@ -75,8 +79,8 @@ expression:
 	constant {Const $1}
 	| IDENTIFIER {Var $1}
 	| LEFT_BRACKET expression RIGHT_BRACKET {BracketE $2}
+	| expression op expression {Arithmetic_operation($1,$2,$3)} %prec OP
 	| MINUS expression %prec UMINUS {Unary_minus $2}
-	| expression op expression {Arithmetic_operation($1,$2,$3)}
 	| expression comp expression {Comparison($1,$2,$3)}
 	| IDENTIFIER LEFT_BRACKET expression_list RIGHT_BRACKET {Function_call($1,$3)}
 	| expression LEFT_SQUARED_BRACKET expression RIGHT_SQUARED_BRACKET {Array_access($1,$3)}

@@ -1,4 +1,10 @@
-all: bin/test_parse bin/pascal_to_pascal bin/print_call_graph
+all: bin/test_parse bin/pascal_to_pascal bin/print_call_graph bin/pascal_interpreter
+
+bin/pascal_interpreter:temp/lexer.cmo temp/parser.cmo temp/pascal_interpreter.cmo temp/type.cmo temp/string_of_pascal.cmo Makefile
+	ocamlc -I temp -o bin/pascal_interpreter temp/type.cmo temp/lexer.cmo temp/parser.cmo temp/string_of_pascal.cmo temp/pascal_interpreter.cmo
+	
+temp/pascal_interpreter.cmo:source/pascal_interpreter.ml temp/parser.cmi temp/lexer.cmi temp/type.cmi temp/string_of_pascal.cmi Makefile
+	ocamlc -I temp -o temp/pascal_interpreter.cmo -c source/pascal_interpreter.ml
 
 bin/print_call_graph:temp/lexer.cmo temp/parser.cmo temp/print_call_graph.cmo temp/type.cmo temp/make_call_graph.cmo Makefile
 	ocamlc -I temp -o bin/print_call_graph temp/type.cmo temp/make_call_graph.cmo temp/lexer.cmo temp/parser.cmo temp/print_call_graph.cmo
@@ -15,12 +21,15 @@ bin/test_parse:temp/lexer.cmo temp/parser.cmo temp/test_parse.cmo temp/type.cmo 
 temp/test_parse.cmo:source/test_parse.ml temp/parser.cmi temp/lexer.cmi temp/type.cmi Makefile
 	ocamlc -I temp -o temp/test_parse.cmo -c source/test_parse.ml
 
-bin/pascal_to_pascal:temp/lexer.cmo temp/parser.cmo temp/pascal_to_pascal.cmo temp/type.cmo Makefile
-	ocamlc -I temp -o bin/pascal_to_pascal temp/type.cmo temp/lexer.cmo temp/parser.cmo temp/pascal_to_pascal.cmo
+bin/pascal_to_pascal:temp/lexer.cmo temp/parser.cmo temp/pascal_to_pascal.cmo temp/string_of_pascal.cmo temp/type.cmo Makefile
+	ocamlc -I temp -o bin/pascal_to_pascal temp/type.cmo temp/lexer.cmo temp/parser.cmo temp/string_of_pascal.cmo temp/pascal_to_pascal.cmo
 	
-temp/pascal_to_pascal.cmo:source/pascal_to_pascal.ml temp/parser.cmi temp/lexer.cmi temp/type.cmi Makefile
+temp/pascal_to_pascal.cmo:source/pascal_to_pascal.ml temp/parser.cmi temp/lexer.cmi temp/string_of_pascal.cmi temp/type.cmi Makefile
 	ocamlc -I temp -o temp/pascal_to_pascal.cmo -c source/pascal_to_pascal.ml
 
+temp/string_of_pascal.cmo temp/string_of_pascal.cmi:source/string_of_pascal.ml temp/type.cmi  Makefile
+	ocamlc -I temp -o temp/string_of_pascal.cmo -c source/string_of_pascal.ml
+	
 temp/parser.cmo:temp/parser.ml temp/parser.cmi temp/type.cmi Makefile
 	ocamlc -I temp -o temp/parser.cmo -c temp/parser.ml
 	
@@ -44,9 +53,9 @@ clean:
 	rm -f bin/*
 	rm -f htmldoc/*
 	
-htmldoc:source/make_call_graph.ml  source/pascal_to_pascal.ml  source/print_call_graph.ml  source/test_parse.ml  source/type.ml temp/lexer.cmi  temp/make_call_graph.cmi  temp/parser.cmi  temp/pascal_to_pascal.cmi  temp/print_call_graph.cmi  temp/test_parse.cmi  temp/type.cmi Makefile
+htmldoc:source/pascal_interpreter.ml source/make_call_graph.ml  source/pascal_to_pascal.ml  source/print_call_graph.ml  source/test_parse.ml  source/type.ml temp/pascal_interpreter.cmi temp/lexer.cmi  temp/make_call_graph.cmi  temp/parser.cmi  temp/pascal_to_pascal.cmi  temp/print_call_graph.cmi  temp/test_parse.cmi  temp/type.cmi Makefile
 	mkdir -p htmldoc
-	ocamldoc -charset utf8 -html -d htmldoc -I temp source/make_call_graph.ml  source/pascal_to_pascal.ml  source/print_call_graph.ml  source/test_parse.ml  source/type.ml
+	ocamldoc -charset utf8 -html -d htmldoc -I temp source/pascal_interpreter.ml source/make_call_graph.ml  source/pascal_to_pascal.ml  source/print_call_graph.ml  source/test_parse.ml  source/type.ml
 	
 pascal_to_pascal_example:bin/pascal_to_pascal Makefile
 	@echo "Premier exemple, trivial.p original :"

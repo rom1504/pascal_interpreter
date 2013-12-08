@@ -1,8 +1,10 @@
+(** Convert a call graph to .dot file *)
+
 open Type;;
 open Parser;;
 open Make_call_graph;;
 
-
+(** Convert a call graph to a string containing a call graph with the syntax of a .dot file *)
 let string_of_call_graph call_graph=
 	"digraph call_graph {\n  program;\n"^
 	(IdentifierMap.fold 
@@ -11,6 +13,7 @@ let string_of_call_graph call_graph=
 	call_graph "")
 	^"}";;
 
+(** Print a call_graph as a .dot file *)
 let pretty_print a=print_string(string_of_call_graph(a));;
 
 pretty_print(Make_call_graph.make_call_graph(Parser.main Lexer.token (Lexing.from_channel stdin)));;
