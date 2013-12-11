@@ -1,11 +1,13 @@
 c=0
 for i in `ls exemple/*` 
 do
-a=`perl -p -e 's/\{.+?\}//gs' exemple/arith2.p | tr -d ' \t\n\r\f'`
-b=`cat exemple/arith2.p | bin/pascal_to_pascal | tr -d ' \t\n\r\f'`
+a=`cat $i | tr -d ' \t\n\r\f' | perl -p -e 's/\{.+?\}//g'`
+b=`cat $i | bin/pascal_to_pascal | tr -d ' \t\n\r\f'`
 if [ $a != $b ]
 then
 echo probleme avec $i
+echo expected : $a
+echo actual : $b
 c=$(($c+1))
 fi
 done

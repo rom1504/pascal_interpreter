@@ -5,7 +5,7 @@ begin
    writeln(a);
    writeln(b);
    writeln(c);
-   writeln(6);
+   writeln(6)
 end;
 
 begin

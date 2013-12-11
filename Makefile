@@ -72,19 +72,25 @@ pascal_to_pascal_test:temp/pascal_to_pascal_test_done
 	
 
 print_call_graph_test:temp/print_call_graph_test_done
+
+pascal_interpreter_all_test:temp/pascal_interpreter_all_test_done
 	
 	
-temp/parse_error_test_done:bin/test_parse test/parse_error_test.sh Makefile
+temp/parse_error_test_done:bin/test_parse test/parse_error_test.sh exemple/*.p Makefile
 	bash test/parse_error_test.sh
 	touch temp/parse_error_test_done
 	
-temp/pascal_to_pascal_test_done:bin/pascal_to_pascal test/pascal_to_pascal_test.sh Makefile
+temp/pascal_to_pascal_test_done:bin/pascal_to_pascal test/pascal_to_pascal_test.sh exemple/*.p Makefile
 	bash test/pascal_to_pascal_test.sh
 	touch temp/pascal_to_pascal_test_done
 	
-temp/print_call_graph_test_done:bin/print_call_graph test/print_call_graph_test.sh Makefile
+temp/print_call_graph_test_done:bin/print_call_graph test/print_call_graph_test.sh exemple/*.p  resultats_attendus/*.dot Makefile
 	bash test/print_call_graph_test.sh
 	touch temp/print_call_graph_test_done
+	
+temp/pascal_interpreter_all_test_done:bin/pascal_interpreter test/pascal_interpreter_test.sh test/pascal_interpreter_all_test.sh exemple/*.p unit_test/*.test Makefile
+	bash test/pascal_interpreter_all_test.sh
+	touch temp/pascal_interpreter_all_test_done
 
-test:parse_test pascal_to_pascal_test print_call_graph_test
+test:parse_test pascal_to_pascal_test print_call_graph_test pascal_interpreter_all_test
 	

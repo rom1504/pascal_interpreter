@@ -1,11 +1,12 @@
 program
-var  a : array of array of array of integer ; b : array of boolean; c : integer ; u : integer ;
+var  a : array of array of array of integer ; b : array of boolean; c : integer ; u : integer ; g : integer ;
 
 function lala () : integer;
 var i : integer;
 begin
+	g:=g+1;
 	i:=i+1;
-	if i=1 then begin u:=lala(); writeln(456) end else writeln(i+56);
+	if i=1 and g<5 then begin u:=lala(); writeln(456) end else writeln(i+56);
 	c:=6;
 	lala:=0
 end;
