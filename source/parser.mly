@@ -22,19 +22,11 @@
 %left DIFF SUP_EQUAL SUP INF_EQUAL EQUAL INF
 
 %left PLUS MINUS
-%left TIMES DIV
-%nonassoc OP
+%left MULT DIV
 %nonassoc UMINUS
-
 
 %left OR
 %left AND
-%nonassoc PBRACKET
-
-%left SEMICOLON
-%nonassoc USEMICOLON
-
-
 
 %start main
 %type <Type.program> main
@@ -73,13 +65,16 @@ condition:
 	| NOT condition {Negation $2}
 	| condition OR condition {Or($1,$3)}
 	| condition AND condition {And($1,$3)}
-	| LEFT_BRACKET condition RIGHT_BRACKET %prec PBRACKET {Bracket $2};
+	| LEFT_BRACKET condition RIGHT_BRACKET {Bracket $2};
 	
 expression:
 	constant {Const $1}
 	| IDENTIFIER {Var $1}
 	| LEFT_BRACKET expression RIGHT_BRACKET {BracketE $2}
-	| expression op expression {Arithmetic_operation($1,$2,$3)} %prec OP
+	| expression PLUS expression {Arithmetic_operation($1,Plus,$3)}
+	| expression MINUS expression {Arithmetic_operation($1,Minus,$3)}
+	| expression MULT expression {Arithmetic_operation($1,Mult,$3)}
+	| expression DIV expression {Arithmetic_operation($1,Div,$3)}
 	| MINUS expression %prec UMINUS {Unary_minus $2}
 	| expression comp expression {Comparison($1,$2,$3)}
 	| IDENTIFIER LEFT_BRACKET expression_list RIGHT_BRACKET {Function_call($1,$3)}
@@ -90,12 +85,6 @@ constant:
 	INT {Int $1}
 	| TRUE {Bool true}
 	| FALSE {Bool false};
-	
-op:
-	PLUS {Plus}
-	| MINUS {Minus}
-	| MULT {Mult}
-	| DIV {Div};
 	
 comp:
 	INF {Inf}
