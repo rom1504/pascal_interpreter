@@ -21,10 +21,10 @@ let rec stars_of_pascal_type pascal_type=match pascal_type	with
 	| Array sub_pascal_type -> (stars_of_pascal_type sub_pascal_type)^"*";;
 	
 (** Convert an environment to a string *)
-let string_of_environment env = 
+let string_of_environment tab env = 
 	String.concat "" (List.map (fun (identifier_list,pascal_type) ->
 	let stars=stars_of_pascal_type pascal_type in
-	"int "
+	tab^"int "
 	^(String.concat "," (List.map (fun identifier -> stars^identifier^(match pascal_type with
 		| Integer | Boolean -> "=0"
 		| _ -> ""
@@ -34,7 +34,7 @@ let string_of_environment env =
 let string_of_environment_in_parameter env = String.concat "," (List.map (fun (identifier_list,pascal_type) -> (String.concat "," (List.map (fun identifier -> (string_of_pascal_type pascal_type)^" "^identifier) identifier_list))) env);;
 
 (** Convert an optional variable definition to a string *)
-let string_of_optional_variable_definition env = if env=[] then "" else (string_of_environment env);;
+let string_of_optional_variable_definition tab env = if env=[] then "" else (string_of_environment tab env);;
 	
 (** Convert a constant to a string *)
 let string_of_constant constant=match constant with
@@ -82,31 +82,31 @@ let rec string_of_condition in_function_definition_identifier condition=match co
 	| Bracket condition -> "("^(string_of_condition in_function_definition_identifier condition)^")";;
 	
 (** Convert an instruction to a string *)
-let rec string_of_instruction in_function_definition_identifier instruction=match instruction with
-	| Proc_call (identifier,expression_list) -> (clean_string_of_func_or_proc identifier)^"("^(string_of_expression_list in_function_definition_identifier expression_list)^");\n"
-	| Var_assign (identifier,expression) -> (if in_function_definition_identifier != "" && in_function_definition_identifier=identifier then "__"^(clean_string_of_func_or_proc identifier)^"__" else identifier)^"="^(string_of_expression in_function_definition_identifier expression)^";\n"
-	| Array_assign (expression1,expression2,expression3) -> (string_of_expression in_function_definition_identifier expression1)^"["^(string_of_expression in_function_definition_identifier expression2)^"]="^(string_of_expression in_function_definition_identifier expression3)^";\n"
-	| Conditional (condition,instruction1,instruction2) -> "if("^(string_of_condition in_function_definition_identifier condition)^") "^(string_of_instruction in_function_definition_identifier instruction1)^"else "^(string_of_instruction in_function_definition_identifier instruction2)
-	| Loop (condition,instruction) -> "while("^(string_of_condition in_function_definition_identifier condition)^")"^(string_of_instruction in_function_definition_identifier instruction)
-	| Block instruction_list -> "\n{\n"^(string_of_instruction_list in_function_definition_identifier instruction_list)^"}\n"
+let rec string_of_instruction btab tab in_function_definition_identifier instruction=match instruction with
+	| Proc_call (identifier,expression_list) -> (if btab then tab else "")^(clean_string_of_func_or_proc identifier)^"("^(string_of_expression_list in_function_definition_identifier expression_list)^");\n"
+	| Var_assign (identifier,expression) -> (if btab then tab else "")^(if in_function_definition_identifier != "" && in_function_definition_identifier=identifier then "__"^(clean_string_of_func_or_proc identifier)^"__" else identifier)^"="^(string_of_expression in_function_definition_identifier expression)^";\n"
+	| Array_assign (expression1,expression2,expression3) -> (if btab then tab else "")^(string_of_expression in_function_definition_identifier expression1)^"["^(string_of_expression in_function_definition_identifier expression2)^"]="^(string_of_expression in_function_definition_identifier expression3)^";\n"
+	| Conditional (condition,instruction1,instruction2) -> (if btab then tab else "")^"if("^(string_of_condition in_function_definition_identifier condition)^") "^(string_of_instruction false tab in_function_definition_identifier instruction1)^tab^"else "^(string_of_instruction false tab in_function_definition_identifier instruction2)
+	| Loop (condition,instruction) -> (if btab then tab else "")^"while("^(string_of_condition in_function_definition_identifier condition)^") "^(string_of_instruction false tab in_function_definition_identifier instruction)
+	| Block instruction_list -> "\n"^tab^"{\n"^(string_of_instruction_list (tab^"\t") in_function_definition_identifier instruction_list)^tab^"}\n"
 	
 (** Convert an instruction list to a string *)
-and string_of_instruction_list in_function_definition_identifier instr_list=(String.concat "" (List.map (string_of_instruction in_function_definition_identifier) instr_list));;
+and string_of_instruction_list tab in_function_definition_identifier instr_list=(String.concat "" (List.map (string_of_instruction true tab in_function_definition_identifier) instr_list));;
 
 (** Convert a procedure definition to a string *)
 let string_of_proc_def (identifier,environment,variable_definition,instruction_list)=
 	"void "^(clean_string_of_func_or_proc identifier)^"("^(string_of_environment_in_parameter environment)^")\n{\n"
-	^(string_of_optional_variable_definition variable_definition)
-	^(string_of_instruction_list "" instruction_list)^"\n"^
+	^(string_of_optional_variable_definition "\t" variable_definition)
+	^(string_of_instruction_list "\t" "" instruction_list)^
 	"}";;
 
 (** Convert a function definition to a string *)
 let string_of_func_def (identifier,environment,return_type,variable_definition,instruction_list)=
 	let nidentifier=clean_string_of_func_or_proc identifier in
 	(string_of_pascal_type return_type)^" "^nidentifier^"("^(string_of_environment_in_parameter environment)^")\n{\n"
-	^(string_of_optional_variable_definition ((((" __"^nidentifier^"__")::[]),return_type)::variable_definition))
-	^(string_of_instruction_list identifier instruction_list)^
-	"return __"^nidentifier^"__;\n"^
+	^(string_of_optional_variable_definition "\t" ((((" __"^nidentifier^"__")::[]),return_type)::variable_definition))
+	^(string_of_instruction_list "\t" identifier instruction_list)^
+	"\treturn __"^nidentifier^"__;\n"^
 	"}";;
 
 (** Convert a procedure or function definition to a string *)
@@ -116,7 +116,7 @@ let string_of_proc_or_func_def proc_func=match proc_func with | Func f -> string
 let string_of_proc_func_list proc_func_list=(String.concat "\n\n" (List.map string_of_proc_or_func_def proc_func_list))^(if proc_func_list=[] then "" else "\n\n");;
 
 (** Convert a program to a string *)
-let string_of_program (env,proc_func_list,instr_list) = "#include <stdio.h>\n#include <stdlib.h>\n\nvoid writeln(int a){printf(\"%d\\n\",a);} \nvoid write(int a){printf(\"%d\\n\",a);} \nint readln(){int a;scanf(\"%d\",&a); return a;}\n\n"^(string_of_optional_variable_definition env)^(string_of_proc_func_list proc_func_list)^"int main()\n{\n"^(string_of_instruction_list "" instr_list)^"\nreturn 0;\n}";;
+let string_of_program (env,proc_func_list,instr_list) = "#include <stdio.h>\n#include <stdlib.h>\n\nvoid writeln(int a){printf(\"%d\\n\",a);} \nvoid write(int a){printf(\"%d\\n\",a);} \nint readln(){int a;scanf(\"%d\",&a); return a;}\n\n"^(string_of_optional_variable_definition "" env)^(string_of_proc_func_list proc_func_list)^"int main()\n{\n"^(string_of_instruction_list "\t" "" instr_list)^"\treturn 0;\n}";;
 
 
 (** Print a pascal program converted to a string *)
