@@ -1,46 +1,55 @@
-all: bin/test_parse bin/pascal_to_pascal bin/print_call_graph bin/pascal_interpreter
+CC=ocamlopt
+OBJ=cmx
 
-bin/pascal_interpreter:temp/lexer.cmo temp/parser.cmo temp/pascal_interpreter.cmo temp/type.cmo temp/string_of_pascal.cmo Makefile
-	ocamlc -I temp -o bin/pascal_interpreter temp/type.cmo temp/lexer.cmo temp/parser.cmo temp/string_of_pascal.cmo temp/pascal_interpreter.cmo
-	
-temp/pascal_interpreter.cmo:source/pascal_interpreter.ml temp/parser.cmi temp/lexer.cmi temp/type.cmi temp/string_of_pascal.cmi Makefile
-	ocamlc -I temp -o temp/pascal_interpreter.cmo -c source/pascal_interpreter.ml
+all: bin/test_parse bin/pascal_to_pascal bin/print_call_graph bin/pascal_interpreter bin/pascal_to_c
 
-bin/print_call_graph:temp/lexer.cmo temp/parser.cmo temp/print_call_graph.cmo temp/type.cmo temp/make_call_graph.cmo Makefile
-	ocamlc -I temp -o bin/print_call_graph temp/type.cmo temp/make_call_graph.cmo temp/lexer.cmo temp/parser.cmo temp/print_call_graph.cmo
+bin/pascal_interpreter:temp/lexer.$(OBJ) temp/parser.$(OBJ) temp/pascal_interpreter.$(OBJ) temp/type.$(OBJ) temp/string_of_pascal.$(OBJ) Makefile
+	$(CC) -I temp -o bin/pascal_interpreter temp/type.$(OBJ) temp/lexer.$(OBJ) temp/parser.$(OBJ) temp/string_of_pascal.$(OBJ) temp/pascal_interpreter.$(OBJ)
 	
-temp/print_call_graph.cmo:source/print_call_graph.ml temp/parser.cmi temp/lexer.cmi temp/type.cmi temp/make_call_graph.cmi Makefile
-	ocamlc -I temp -o temp/print_call_graph.cmo -c source/print_call_graph.ml
-	
-temp/make_call_graph.cmo temp/make_call_graph.cmi:source/make_call_graph.ml temp/type.cmi Makefile
-	ocamlc -I temp -o temp/make_call_graph.cmo -c source/make_call_graph.ml
+temp/pascal_interpreter.$(OBJ):source/pascal_interpreter.ml temp/parser.cmi temp/lexer.cmi temp/type.cmi temp/string_of_pascal.cmi Makefile
+	$(CC) -I temp -o temp/pascal_interpreter.$(OBJ) -c source/pascal_interpreter.ml
 
-bin/test_parse:temp/lexer.cmo temp/parser.cmo temp/test_parse.cmo temp/type.cmo Makefile
-	ocamlc -I temp -o bin/test_parse temp/type.cmo temp/lexer.cmo temp/parser.cmo temp/test_parse.cmo
+bin/print_call_graph:temp/lexer.$(OBJ) temp/parser.$(OBJ) temp/print_call_graph.$(OBJ) temp/type.$(OBJ) temp/make_call_graph.$(OBJ) Makefile
+	$(CC) -I temp -o bin/print_call_graph temp/type.$(OBJ) temp/make_call_graph.$(OBJ) temp/lexer.$(OBJ) temp/parser.$(OBJ) temp/print_call_graph.$(OBJ)
 	
-temp/test_parse.cmo:source/test_parse.ml temp/parser.cmi temp/lexer.cmi temp/type.cmi Makefile
-	ocamlc -I temp -o temp/test_parse.cmo -c source/test_parse.ml
+temp/print_call_graph.$(OBJ):source/print_call_graph.ml temp/parser.cmi temp/lexer.cmi temp/type.cmi temp/make_call_graph.cmi Makefile
+	$(CC) -I temp -o temp/print_call_graph.$(OBJ) -c source/print_call_graph.ml
+	
+temp/make_call_graph.$(OBJ) temp/make_call_graph.cmi:source/make_call_graph.ml temp/type.cmi Makefile
+	$(CC) -I temp -o temp/make_call_graph.$(OBJ) -c source/make_call_graph.ml
 
-bin/pascal_to_pascal:temp/lexer.cmo temp/parser.cmo temp/pascal_to_pascal.cmo temp/string_of_pascal.cmo temp/type.cmo Makefile
-	ocamlc -I temp -o bin/pascal_to_pascal temp/type.cmo temp/lexer.cmo temp/parser.cmo temp/string_of_pascal.cmo temp/pascal_to_pascal.cmo
+bin/test_parse:temp/lexer.$(OBJ) temp/parser.$(OBJ) temp/test_parse.$(OBJ) temp/type.$(OBJ) Makefile
+	$(CC) -I temp -o bin/test_parse temp/type.$(OBJ) temp/lexer.$(OBJ) temp/parser.$(OBJ) temp/test_parse.$(OBJ)
 	
-temp/pascal_to_pascal.cmo:source/pascal_to_pascal.ml temp/parser.cmi temp/lexer.cmi temp/string_of_pascal.cmi temp/type.cmi Makefile
-	ocamlc -I temp -o temp/pascal_to_pascal.cmo -c source/pascal_to_pascal.ml
+temp/test_parse.$(OBJ):source/test_parse.ml temp/parser.cmi temp/lexer.cmi temp/type.cmi Makefile
+	$(CC) -I temp -o temp/test_parse.$(OBJ) -c source/test_parse.ml
 
-temp/string_of_pascal.cmo temp/string_of_pascal.cmi:source/string_of_pascal.ml temp/type.cmi  Makefile
-	ocamlc -I temp -o temp/string_of_pascal.cmo -c source/string_of_pascal.ml
+bin/pascal_to_c:temp/lexer.$(OBJ) temp/parser.$(OBJ) temp/pascal_to_c.$(OBJ) temp/type.$(OBJ) Makefile
+	$(CC) -I temp -o bin/pascal_to_c temp/type.$(OBJ) temp/lexer.$(OBJ) temp/parser.$(OBJ) temp/pascal_to_c.$(OBJ)
 	
-temp/parser.cmo:temp/parser.ml temp/parser.cmi temp/type.cmi Makefile
-	ocamlc -I temp -o temp/parser.cmo -c temp/parser.ml
+temp/pascal_to_c.$(OBJ):source/pascal_to_c.ml temp/parser.cmi temp/lexer.cmi temp/type.cmi Makefile
+	$(CC) -I temp -o temp/pascal_to_c.$(OBJ) -c source/pascal_to_c.ml
 	
-temp/lexer.cmo temp/lexer.cmi:temp/lexer.ml temp/parser.cmi temp/type.cmi  Makefile
-	ocamlc -I temp -o temp/lexer.cmo -c temp/lexer.ml
+bin/pascal_to_pascal:temp/lexer.$(OBJ) temp/parser.$(OBJ) temp/pascal_to_pascal.$(OBJ) temp/string_of_pascal.$(OBJ) temp/type.$(OBJ) Makefile
+	$(CC) -I temp -o bin/pascal_to_pascal temp/type.$(OBJ) temp/lexer.$(OBJ) temp/parser.$(OBJ) temp/string_of_pascal.$(OBJ) temp/pascal_to_pascal.$(OBJ)
 	
-temp/type.cmo temp/type.cmi:source/type.ml Makefile
-	ocamlc -I temp -o temp/type.cmo -c source/type.ml
+temp/pascal_to_pascal.$(OBJ):source/pascal_to_pascal.ml temp/parser.cmi temp/lexer.cmi temp/string_of_pascal.cmi temp/type.cmi Makefile
+	$(CC) -I temp -o temp/pascal_to_pascal.$(OBJ) -c source/pascal_to_pascal.ml
+
+temp/string_of_pascal.$(OBJ) temp/string_of_pascal.cmi:source/string_of_pascal.ml temp/type.cmi  Makefile
+	$(CC) -I temp -o temp/string_of_pascal.$(OBJ) -c source/string_of_pascal.ml
+	
+temp/parser.$(OBJ):temp/parser.ml temp/parser.cmi temp/type.cmi Makefile
+	$(CC) -I temp -o temp/parser.$(OBJ) -c temp/parser.ml
+	
+temp/lexer.$(OBJ) temp/lexer.cmi:temp/lexer.ml temp/parser.cmi temp/type.cmi  Makefile
+	$(CC) -I temp -o temp/lexer.$(OBJ) -c temp/lexer.ml
+	
+temp/type.$(OBJ) temp/type.cmi:source/type.ml Makefile
+	$(CC) -I temp -o temp/type.$(OBJ) -c source/type.ml
 	
 temp/parser.cmi:temp/parser.mli temp/type.cmi Makefile
-	ocamlc  -I temp -o temp/parser.cmi -c temp/parser.mli
+	$(CC)  -I temp -o temp/parser.cmi -c temp/parser.mli
 
 temp/lexer.ml:source/lexer.mll Makefile
 	ocamllex -o temp/lexer.ml source/lexer.mll
@@ -73,7 +82,11 @@ pascal_to_pascal_test:temp/pascal_to_pascal_test_done
 
 print_call_graph_test:temp/print_call_graph_test_done
 
+
 pascal_interpreter_all_test:temp/pascal_interpreter_all_test_done
+
+
+pascal_to_c_all_test:temp/pascal_to_c_all_test_done
 	
 	
 temp/parse_error_test_done:bin/test_parse test/parse_error_test.sh exemple/*.p Makefile
@@ -91,6 +104,10 @@ temp/print_call_graph_test_done:bin/print_call_graph test/print_call_graph_test.
 temp/pascal_interpreter_all_test_done:bin/pascal_interpreter test/pascal_interpreter_test.sh test/pascal_interpreter_all_test.sh exemple/*.p unit_test/*.test Makefile
 	bash test/pascal_interpreter_all_test.sh
 	touch temp/pascal_interpreter_all_test_done
+	
+temp/pascal_to_c_all_test_done:bin/pascal_to_c test/pascal_to_c_test.sh test/pascal_to_c_all_test.sh exemple/*.p unit_test/*.test Makefile
+	bash test/pascal_to_c_all_test.sh
+	touch temp/pascal_to_c_all_test_done
 
-test:parse_test pascal_to_pascal_test print_call_graph_test pascal_interpreter_all_test
+test:parse_test pascal_to_pascal_test print_call_graph_test pascal_interpreter_all_test pascal_to_c_all_test
 	

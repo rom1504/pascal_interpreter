@@ -1,5 +1,5 @@
 program
-var  a : array of array of array of integer ; b : array of boolean; c : integer ; u : integer ; g : integer ;
+var  a : array of array of array of array of integer ; b : array of boolean; c : integer ; u : integer ; g : integer ;
 
 function lala () : integer;
 var i : integer;
