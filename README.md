@@ -1,3 +1,3 @@
 # pascal interpreter
 
-[![build status](http://gitlab-ci.rom1504.fr/projects/1/status.png?ref=master)](http://gitlab-ci.rom1504.fr/projects/1?ref=master)
+[![Build Status](https://travis-ci.org/rom1504/pascal_interpreter.png?branch=master)](https://travis-ci.org/rom1504/pascal_interpreter)
